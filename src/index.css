@@ -2,13 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile-first: base styles for phones, enhance from md: up */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
 body {
-  background-image: url("./assets/alo hats.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
   margin: 0;
-  padding: 0;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #020617;
+}
+
+/* Decorative background: skip fixed attachment on small screens (iOS jank) */
+@media (min-width: 768px) {
+  body {
+    background-image: url("./assets/alo hats.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .touch-action-manipulation {
+    touch-action: manipulation;
+  }
 }

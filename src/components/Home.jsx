@@ -65,7 +65,7 @@ function Home() {
   );
 
   return (
-    <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-gray-950 text-white">
+    <div className="relative bg-[#FDF8F3] text-gray-800 min-h-screen">
       <TopBar brandOpacity={scrollProgress} />
 
       <div
@@ -77,7 +77,7 @@ function Home() {
         }}
       >
         <Link to="/" className="pointer-events-auto touch-action-manipulation">
-          <h2 className="max-w-[90vw] text-center text-3xl font-black tracking-tight text-white drop-shadow-xl sm:text-5xl md:text-7xl">
+          <h2 className="max-w-[90vw] text-center text-3xl sm:mb-32 font-black tracking-tight text-gray-900 drop-shadow-xl sm:text-5xl md:text-7xl">
             Pick Fashion
           </h2>
         </Link>
@@ -89,29 +89,29 @@ function Home() {
         }`}
       >
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-24 left-0 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl sm:h-80 sm:w-80" />
-          <div className="absolute right-0 top-24 h-56 w-56 rounded-full bg-fuchsia-500/20 blur-3xl sm:top-32 sm:h-80 sm:w-80 md:right-10" />
-          <div className="absolute bottom-16 left-1/4 h-48 w-48 rounded-full bg-blue-500/20 blur-3xl sm:bottom-20 sm:h-72 sm:w-72 md:left-1/3" />
+          <div className="absolute -top-24 left-0 h-56 w-56 rounded-full bg-orange-300/30 blur-3xl sm:h-80 sm:w-80" />
+          <div className="absolute right-0 top-24 h-56 w-56 rounded-full bg-rose-300/30 blur-3xl sm:top-32 sm:h-80 sm:w-80 md:right-10" />
+          <div className="absolute bottom-16 left-1/4 h-48 w-48 rounded-full bg-amber-300/30 blur-3xl sm:bottom-20 sm:h-72 sm:w-72 md:left-1/3" />
         </div>
         <div
           className="sticky top-0 flex min-h-[100dvh] items-center"
           style={{ opacity: heroOpacity }}
         >
           <div className="max-w-3xl space-y-5 pt-4 sm:space-y-7 sm:pt-12">
-            <p className="inline-flex rounded-full border border-cyan-300/40 bg-cyan-400/10 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-cyan-200 sm:px-4 sm:text-xs sm:tracking-[0.2em]">
+            <p className="inline-flex rounded-full border border-orange-300/60 bg-orange-50/80 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-orange-600 sm:px-4 sm:text-xs sm:tracking-[0.2em]">
               Style Marketplace
             </p>
-            <p className="text-lg font-medium leading-snug text-slate-100 sm:text-xl md:text-3xl md:leading-tight">
+            <p className="text-lg font-medium leading-snug text-gray-800 sm:text-xl md:text-3xl md:leading-tight">
               Discover curated fashion pieces, accessories, and trend-forward
               picks in one place.
             </p>
-            <p className="max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base md:text-lg">
+            <p className="max-w-2xl text-sm leading-relaxed text-gray-500 sm:text-base md:text-lg">
               Scroll down to reveal the full catalog with product visuals,
               descriptions, and prices.
             </p>
-            <div className="flex items-center gap-3 text-cyan-200/90">
-              <span className="flex h-9 w-6 shrink-0 items-start justify-center rounded-full border border-cyan-300/50 p-1">
-                <span className="mt-0.5 block h-2 w-2 rounded-full bg-cyan-200 animate-bounce" />
+            <div className="flex items-center gap-3 text-orange-500/90">
+              <span className="flex h-9 w-6 shrink-0 items-start justify-center rounded-full border border-orange-400/50 p-1">
+                <span className="mt-0.5 block h-2 w-2 rounded-full bg-orange-500 animate-bounce" />
               </span>
               <span className="text-xs uppercase tracking-wider sm:text-sm">
                 Scroll to explore
@@ -130,7 +130,7 @@ function Home() {
         }}
       >
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-6 text-2xl font-semibold text-slate-100 sm:mb-8 sm:text-3xl">
+          <h2 className="mb-6 text-2xl font-semibold text-gray-800 sm:mb-8 sm:text-3xl">
             Products ({allProducts.length})
           </h2>
 
@@ -139,7 +139,7 @@ function Home() {
               <Link
                 to={`/product/${item.id}`}
                 key={`${item.id}-${item.title}`}
-                className="group touch-action-manipulation overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/80 shadow-xl backdrop-blur-sm transition-all duration-300 active:scale-[0.99] sm:hover:-translate-y-1 sm:hover:border-cyan-400/60"
+                className="group touch-action-manipulation overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-100/50 backdrop-blur-sm transition-all duration-300 active:scale-[0.99] sm:hover:-translate-y-1 sm:hover:border-orange-300/60"
               >
                 <img
                   src={item.thumbnail}
@@ -147,14 +147,14 @@ function Home() {
                   className="aspect-[4/3] w-full object-cover transition-transform duration-500 sm:aspect-auto sm:h-52 group-hover:scale-105"
                 />
                 <div className="space-y-1 p-2 sm:space-y-2 sm:p-4">
-                  <h3 className="truncate text-sm font-bold text-white sm:text-base md:text-lg">
+                  <h3 className="truncate text-sm font-bold text-gray-800 sm:text-base md:text-lg">
                     {item.title}
                   </h3>
-                  <p className="line-clamp-2 text-xs leading-relaxed text-slate-300 sm:line-clamp-3 sm:text-sm">
+                  <p className="line-clamp-2 text-xs leading-relaxed text-gray-500 sm:line-clamp-3 sm:text-sm">
                     {item.description ||
                       "Premium quality item crafted for everyday style and comfort."}
                   </p>
-                  <p className="text-xs font-semibold text-cyan-300 sm:text-sm">
+                  <p className="text-xs font-semibold text-orange-500 sm:text-sm">
                     ${item.price}
                   </p>
                 </div>
@@ -166,7 +166,7 @@ function Home() {
           <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
             {visibleCount < allProducts.length && (
               <button
-                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-cyan-500/25 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-orange-500/25 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
                 onClick={() =>
                   setVisibleCount((prev) =>
                     Math.min(prev + 6, allProducts.length),
@@ -191,7 +191,7 @@ function Home() {
             )}
             <Link
               to="/products"
-              className="inline-flex items-center justify-center rounded-xl border-2 border-cyan-500/50 bg-slate-800/50 px-6 py-3 text-sm font-semibold text-cyan-300 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-cyan-400 hover:bg-slate-700/50 hover:text-cyan-200 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
+              className="inline-flex items-center justify-center rounded-xl border-2 border-orange-400/50 bg-white/80 px-6 py-3 text-sm font-semibold text-orange-600 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-orange-500 hover:bg-orange-50/50 hover:text-orange-700 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
             >
               <svg
                 className="mr-2 h-4 w-4"
@@ -210,14 +210,14 @@ function Home() {
             </Link>
           </div>
 
-          <div className="mt-8 rounded-2xl border border-cyan-500/30 bg-slate-900/80 p-4 sm:mt-10 sm:p-6">
-            <p className="text-xs uppercase tracking-widest text-cyan-300 sm:text-sm">
+          <div className="mt-8 rounded-2xl border border-orange-200 bg-white/90 p-4 shadow-lg shadow-orange-100/30 sm:mt-10 sm:p-6">
+            <p className="text-xs uppercase tracking-widest text-orange-500 sm:text-sm">
               Now Highlighting
             </p>
-            <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl">
+            <h3 className="mt-2 text-xl font-bold text-gray-800 sm:text-2xl">
               {product.title}
             </h3>
-            <p className="mt-2 max-w-3xl text-sm text-slate-300 sm:text-base">
+            <p className="mt-2 max-w-3xl text-sm text-gray-500 sm:text-base">
               {product.description ||
                 "Limited-time featured product from our curated collection."}
             </p>
@@ -226,12 +226,12 @@ function Home() {
       </section>
 
       {/* Contact Us Section */}
-      <footer className="mt-16 border-t border-slate-700/50 bg-slate-950/50 px-6 py-12 backdrop-blur-sm sm:mt-20 sm:px-8 sm:py-16">
+      <footer className="mt-16 border-t border-gray-200 bg-gray-50 px-6 py-12 sm:mt-20 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-2xl font-bold text-white sm:text-3xl">
+          <h2 className="text-center text-2xl font-bold text-gray-800 sm:text-3xl">
             Contact Us
           </h2>
-          <p className="mt-2 text-center text-sm text-slate-400 sm:text-base">
+          <p className="mt-2 text-center text-sm text-gray-500 sm:text-base">
             We&apos;re here to help you with any questions or orders
           </p>
 
@@ -239,11 +239,11 @@ function Home() {
             {/* Phone */}
             <a
               href="tel:+251913950321"
-              className="flex items-center gap-3 rounded-xl bg-slate-800/50 px-5 py-3 transition-all duration-200 hover:scale-105 hover:bg-slate-700/50"
+              className="flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50 transition-all duration-200 hover:scale-105 hover:shadow-lg"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-600/20 sm:h-12 sm:w-12">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 sm:h-12 sm:w-12">
                 <svg
-                  className="h-5 w-5 text-cyan-400 sm:h-6 sm:w-6"
+                  className="h-5 w-5 text-orange-500 sm:h-6 sm:w-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -257,8 +257,8 @@ function Home() {
                 </svg>
               </div>
               <div>
-                <p className="text-xs text-slate-400 sm:text-sm">Phone</p>
-                <p className="text-sm font-semibold text-white sm:text-base">
+                <p className="text-xs text-gray-500 sm:text-sm">Phone</p>
+                <p className="text-sm font-semibold text-gray-800 sm:text-base">
                   +251 913 950 321
                 </p>
               </div>
@@ -269,11 +269,11 @@ function Home() {
               href="https://t.me/Rutha_5"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-xl bg-slate-800/50 px-5 py-3 transition-all duration-200 hover:scale-105 hover:bg-slate-700/50"
+              className="flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50 transition-all duration-200 hover:scale-105 hover:shadow-lg"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600/20 sm:h-12 sm:w-12">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 sm:h-12 sm:w-12">
                 <svg
-                  className="h-5 w-5 text-blue-400 sm:h-6 sm:w-6"
+                  className="h-5 w-5 text-blue-500 sm:h-6 sm:w-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -281,8 +281,8 @@ function Home() {
                 </svg>
               </div>
               <div>
-                <p className="text-xs text-slate-400 sm:text-sm">Telegram</p>
-                <p className="text-sm font-semibold text-white sm:text-base">
+                <p className="text-xs text-gray-500 sm:text-sm">Telegram</p>
+                <p className="text-sm font-semibold text-gray-800 sm:text-base">
                   @Rutha_5
                 </p>
               </div>
@@ -291,11 +291,11 @@ function Home() {
             {/* Email */}
             <a
               href="mailto:pickfashionzr@gmail.com"
-              className="flex items-center gap-3 rounded-xl bg-slate-800/50 px-5 py-3 transition-all duration-200 hover:scale-105 hover:bg-slate-700/50"
+              className="flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50 transition-all duration-200 hover:scale-105 hover:shadow-lg"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-600/20 sm:h-12 sm:w-12">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100 sm:h-12 sm:w-12">
                 <svg
-                  className="h-5 w-5 text-purple-400 sm:h-6 sm:w-6"
+                  className="h-5 w-5 text-violet-500 sm:h-6 sm:w-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -309,16 +309,16 @@ function Home() {
                 </svg>
               </div>
               <div>
-                <p className="text-xs text-slate-400 sm:text-sm">Email</p>
-                <p className="text-sm font-semibold text-white sm:text-base">
+                <p className="text-xs text-gray-500 sm:text-sm">Email</p>
+                <p className="text-sm font-semibold text-gray-800 sm:text-base">
                   pickfashionzr@gmail.com
                 </p>
               </div>
             </a>
           </div>
 
-          <div className="mt-10 border-t border-slate-800 pt-6 text-center sm:mt-12 sm:pt-8">
-            <p className="text-xs text-slate-500 sm:text-sm">
+          <div className="mt-10 border-t border-gray-200 pt-6 text-center sm:mt-12 sm:pt-8">
+            <p className="text-xs text-gray-400 sm:text-sm">
               &copy; {new Date().getFullYear()} Pick Fashion. All rights
               reserved.
             </p>

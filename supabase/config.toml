@@ -1,0 +1,11 @@
+# Supabase Configuration
+project_id = "your-project-ref"
+
+[functions.create-payment-session]
+verify_jwt = true
+
+[functions.chapa-webhook]
+verify_jwt = false  # Webhooks don't have JWT
+
+[functions.verify-payment]
+verify_jwt = true

@@ -14,7 +14,7 @@ function Home() {
   useEffect(() => {
     const productInterval = setInterval(() => {
       setCurrentProduct((prev) => (prev + 1) % allProducts.length);
-    }, 3500);
+    }, 4000);
     return () => {
       clearInterval(productInterval);
     };
@@ -109,12 +109,102 @@ function Home() {
               Scroll down to reveal the full catalog with product visuals,
               descriptions, and prices.
             </p>
+
+            {/* Primary CTA Buttons */}
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <Link
+                to="/products"
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-orange-500/25 active:scale-95 sm:px-10 sm:py-4.5 sm:text-lg"
+              >
+                <svg
+                  className="mr-3 h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                  />
+                </svg>
+                Shop Now
+              </Link>
+              <a
+                href="https://t.me/Rutha_5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl border-2 border-orange-400/50 bg-white/80 px-8 py-4 text-base font-bold text-orange-600 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-orange-500 hover:bg-orange-50/50 hover:text-orange-700 active:scale-95 sm:px-10 sm:py-4.5 sm:text-lg"
+              >
+                <svg
+                  className="mr-3 h-5 w-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                </svg>
+                Order via Telegram
+              </a>
+            </div>
+
+            {/* Trust Signals */}
+            <div className="mt-8 rounded-2xl border border-orange-200 bg-white/90 p-4 shadow-lg shadow-orange-100/30 sm:mt-10 sm:p-6">
+              <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+                <div className="flex items-center gap-2">
+                  <svg
+                    className="h-5 w-5 text-green-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">
+                    Secure Payment
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg
+                    className="h-5 w-5 text-blue-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                    <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">
+                    Fast Delivery
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg
+                    className="h-5 w-5 text-purple-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium text-gray-700">
+                    24/7 Support
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <div className="flex items-center gap-3 text-orange-500/90">
               <span className="flex h-9 w-6 shrink-0 items-start justify-center rounded-full border border-orange-400/50 p-1">
                 <span className="mt-0.5 block h-2 w-2 rounded-full bg-orange-500 animate-bounce" />
               </span>
               <span className="text-xs uppercase tracking-wider sm:text-sm">
-                Scroll to explore
+                Scroll to explore more
               </span>
             </div>
           </div>

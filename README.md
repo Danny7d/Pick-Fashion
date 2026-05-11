@@ -13,6 +13,7 @@ A modern e-commerce platform for Ethiopian fashion, featuring Telegram bot integ
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+
 - Supabase account
 - Telegram Bot Token
@@ -20,17 +21,20 @@ A modern e-commerce platform for Ethiopian fashion, featuring Telegram bot integ
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd Pick-fashion
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env
    # Edit .env with your credentials
@@ -107,11 +111,13 @@ ADMIN_TELEGRAM_ID=your_telegram_id
 ## 🚀 Deployment
 
 ### Frontend (Vercel)
+
 1. Connect your repository to Vercel
 2. Set environment variables
 3. Deploy automatically on push to main
 
 ### Bot (Render)
+
 1. Deploy the `Pick-fashion-bot` directory
 2. Use "Background Worker" service type
 3. Set environment variables
@@ -130,8 +136,9 @@ This project is licensed under the MIT License.
 ## 📞 Support
 
 For support, contact us through:
+
 - Telegram: [@Rutha_5](https://t.me/Rutha_5)
-- Email: support@pick-fashion.com
+- Email: pickfashionzr@gmail.com
 
 ---
 

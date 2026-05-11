@@ -77,7 +77,7 @@ function Home() {
         }}
       >
         <Link to="/" className="pointer-events-auto touch-action-manipulation">
-          <h2 className="max-w-[90vw] text-center text-3xl sm:mb-32 font-black tracking-tight text-gray-900 drop-shadow-xl sm:text-5xl md:text-7xl">
+          <h2 className="max-w-[90vw] text-center text-3xl sm:mb-72 font-black tracking-tight text-gray-900 drop-shadow-xl sm:text-5xl md:text-7xl">
             Pick Fashion
           </h2>
         </Link>

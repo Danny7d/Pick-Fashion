@@ -56,77 +56,80 @@ export const AuthContextProvider = ({ children }) => {
     return data || null;
   }, []);
 
-  const signUpNewUser = useCallback(async (email, password, username) => {
-    const availability = await checkUsernameAvailability(username);
-    if (!availability.available) {
-      return {
-        success: false,
-        error: {
-          message:
-            availability.reason === "error"
-              ? "Could not verify username. Check your connection and SQL setup."
-              : "Username unavailable. Please choose another one.",
-        },
-      };
-    }
-
-    const emailRedirectTo =
-      typeof window !== "undefined"
-        ? `${window.location.origin}/login`
-        : undefined;
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo,
-        data: {
-          username: username.trim(),
-        },
-      },
-    });
-
-    if (error) {
-      console.error("There was a problem signing up.", error);
-      return { success: false, error };
-    }
-
-    const user = data?.user;
-    const nextSession = data?.session;
-    const needsEmailConfirmation = Boolean(user && !nextSession);
-
-    return { success: true, data, needsEmailConfirmation };
-  }, [checkUsernameAvailability]);
-
-  const signInUser = useCallback(async (identifier, password) => {
-    const resolvedEmail = await resolveEmailFromIdentifier(identifier);
-    if (!resolvedEmail) {
-      return {
-        success: false,
-        error: {
-          message:
-            "No account found for that username or email. Check spelling or register.",
-        },
-      };
-    }
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: resolvedEmail,
-      password,
-    });
-
-    if (error) {
-      console.error("There was a problem signing in.", error);
-      const msg = (error.message || "").toLowerCase();
-      let message = error.message;
-      if (msg.includes("email not confirmed") || msg.includes("confirm")) {
-        message =
-          "Please confirm your email using the link we sent you before logging in.";
+  const signUpNewUser = useCallback(
+    async (email, password, username) => {
+      const availability = await checkUsernameAvailability(username);
+      if (!availability.available) {
+        return {
+          success: false,
+          error: {
+            message:
+              availability.reason === "error"
+                ? "Could not verify username. Check your connection and SQL setup."
+                : "Username unavailable. Please choose another one.",
+          },
+        };
       }
-      return { success: false, error: { ...error, message } };
-    }
-    return { success: true, data };
-  }, [resolveEmailFromIdentifier]);
+
+      const emailRedirectTo = "https://pick-fashion.vercel.app/login";
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo,
+          data: {
+            username: username.trim(),
+          },
+        },
+      });
+
+      if (error) {
+        console.error("There was a problem signing up.", error);
+        return { success: false, error };
+      }
+
+      const user = data?.user;
+      const nextSession = data?.session;
+      const needsEmailConfirmation = Boolean(user && !nextSession);
+
+      return { success: true, data, needsEmailConfirmation };
+    },
+    [checkUsernameAvailability],
+  );
+
+  const signInUser = useCallback(
+    async (identifier, password) => {
+      const resolvedEmail = await resolveEmailFromIdentifier(identifier);
+      if (!resolvedEmail) {
+        return {
+          success: false,
+          error: {
+            message:
+              "No account found for that username or email. Check spelling or register.",
+          },
+        };
+      }
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: resolvedEmail,
+        password,
+      });
+
+      if (error) {
+        console.error("There was a problem signing in.", error);
+        const msg = (error.message || "").toLowerCase();
+        let message = error.message;
+        if (msg.includes("email not confirmed") || msg.includes("confirm")) {
+          message =
+            "Please confirm your email using the link we sent you before logging in.";
+        }
+        return { success: false, error: { ...error, message } };
+      }
+      return { success: true, data };
+    },
+    [resolveEmailFromIdentifier],
+  );
 
   useEffect(() => {
     const getInitialSession = async () => {

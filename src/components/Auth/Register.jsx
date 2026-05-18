@@ -83,7 +83,7 @@ function Register() {
       } else {
         setErrMsg(result.error?.message || "Registration Failed");
       }
-    } catch (error) {
+    } catch {
       setLoading(false);
       setErrMsg("Registration Failed");
     }

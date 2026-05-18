@@ -1,14 +1,13 @@
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { getFilteredProducts } from "./productUtils";
 import TopBar from "./TopBar";
+import { useCatalogProducts } from "./useCatalogProducts";
 
 function AllProducts() {
-  const allProducts = useMemo(() => getFilteredProducts(), []);
+  const { products: allProducts } = useCatalogProducts();
 
   return (
     <div className="min-h-screen bg-[#FDF8F3] text-gray-800">
-      <TopBar brandOpacity={1} />
+      <TopBar brandOpacity={1} products={allProducts} />
 
       <div className="px-4 pb-24 pt-[calc(5rem+env(safe-area-inset-top))] sm:px-8 md:px-16">
         <div className="mx-auto max-w-7xl">

@@ -11,6 +11,34 @@ const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [session, setSession] = useState(undefined);
+  const [profile, setProfile] = useState(null);
+  const [profileLoading, setProfileLoading] = useState(true);
+
+  const loadProfile = useCallback(async (userId) => {
+    if (!userId) {
+      setProfile(null);
+      setProfileLoading(false);
+      return null;
+    }
+
+    setProfileLoading(true);
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, username, role, created_at")
+      .eq("id", userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Profile lookup failed:", error);
+      setProfile(null);
+      setProfileLoading(false);
+      return null;
+    }
+
+    setProfile(data || null);
+    setProfileLoading(false);
+    return data || null;
+  }, []);
 
   const checkUsernameAvailability = useCallback(async (username) => {
     const t = username.trim();
@@ -137,6 +165,7 @@ export const AuthContextProvider = ({ children }) => {
         data: { session: s },
       } = await supabase.auth.getSession();
       setSession(s);
+      await loadProfile(s?.user?.id);
     };
     getInitialSession();
 
@@ -144,12 +173,13 @@ export const AuthContextProvider = ({ children }) => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession);
+      loadProfile(nextSession?.user?.id);
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [loadProfile]);
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -164,6 +194,10 @@ export const AuthContextProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         session,
+        profile,
+        profileLoading,
+        isAdmin: profile?.role === "admin",
+        refreshProfile: () => loadProfile(session?.user?.id),
         signUpNewUser,
         signInUser,
         signOut,

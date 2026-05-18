@@ -1,20 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserAuth } from "./context/AuthContext";
-import { getFilteredProducts } from "./productUtils";
 import TopBar from "./TopBar";
 import { isProductSaved, toggleSavedProduct } from "./userData";
+import { useCatalogProducts } from "./useCatalogProducts";
 
 function ProductDetail() {
   const { id } = useParams();
   const { session } = UserAuth();
   const [saved, setSaved] = useState(false);
   const [showTelegramConfirm, setShowTelegramConfirm] = useState(false);
-
-  const product = useMemo(() => {
-    const allProducts = getFilteredProducts();
-    return allProducts.find((item) => String(item.id) === id);
-  }, [id]);
+  const { products, loading } = useCatalogProducts();
+  const product = products.find((item) => String(item.id) === id);
 
   useEffect(() => {
     if (session?.user?.id && product) {
@@ -22,10 +19,21 @@ function ProductDetail() {
     }
   }, [session?.user?.id, product]);
 
+  if (loading) {
+    return (
+      <div className="min-h-dvh bg-[#FDF8F3] px-4 pb-8 pt-[calc(5.25rem+env(safe-area-inset-top))] text-gray-800 sm:px-6 sm:py-24">
+        <TopBar products={products} />
+        <div className="mx-auto max-w-3xl rounded-2xl border border-orange-100 bg-white/95 p-6 text-center shadow-lg shadow-orange-100/30 sm:p-8">
+          Loading product...
+        </div>
+      </div>
+    );
+  }
+
   if (!product) {
     return (
       <div className="min-h-dvh bg-[#FDF8F3] px-4 pb-8 pt-[calc(5.25rem+env(safe-area-inset-top))] text-gray-800 sm:px-6 sm:py-24">
-        <TopBar />
+        <TopBar products={products} />
         <div className="mx-auto max-w-3xl rounded-2xl border border-orange-100 bg-white/95 p-6 text-center shadow-lg shadow-orange-100/30 sm:p-8">
           <h1 className="text-2xl font-bold sm:text-3xl">Product not found</h1>
           <p className="mt-3 text-sm text-gray-500 sm:text-base">
@@ -74,7 +82,7 @@ function ProductDetail() {
 
   return (
     <div className="min-h-dvh bg-[#FDF8F3] px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[calc(5.25rem+env(safe-area-inset-top))] text-gray-800 sm:px-6 md:px-12 md:py-24">
-      <TopBar />
+      <TopBar products={products} />
       <div className="mx-auto max-w-6xl">
         <Link
           to="/"

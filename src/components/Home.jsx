@@ -1,17 +1,32 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getFilteredProducts } from "./productUtils";
 import TopBar from "./TopBar";
+import SearchBar from "./SearchBar";
+import { useCatalogProducts } from "./useCatalogProducts";
 
 function Home() {
   const [currentProduct, setCurrentProduct] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [narrow, setNarrow] = useState(true);
   const [visibleCount, setVisibleCount] = useState(6);
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
-  const allProducts = useMemo(() => getFilteredProducts(), []);
+  const { products: allProducts } = useCatalogProducts();
+  const displayProducts = isSearchActive ? searchResults : allProducts;
+
+  const handleSearchResults = (results, isActive) => {
+    setSearchResults(results);
+    setIsSearchActive(isActive);
+  };
+
+  const handleSearchReset = () => {
+    setSearchResults([]);
+    setIsSearchActive(false);
+  };
 
   useEffect(() => {
+    if (!allProducts.length) return undefined;
     const productInterval = setInterval(() => {
       setCurrentProduct((prev) => (prev + 1) % allProducts.length);
     }, 4000);
@@ -42,7 +57,7 @@ function Home() {
   const scrollProgress = clamp(scrollY / scrollDivisor, 0, 1);
   const revealProgress = clamp((scrollY - revealStart) / revealSpan, 0, 1);
   const heroOpacity = 1 - scrollProgress * 0.6;
-  const product = allProducts[currentProduct];
+  const product = allProducts[currentProduct] || allProducts[0];
 
   const hShift = narrow ? 36 : 42;
   const vShift = narrow ? 40 : 45;
@@ -66,7 +81,11 @@ function Home() {
 
   return (
     <div className="relative bg-[#FDF8F3] text-gray-800 min-h-screen">
-      <TopBar brandOpacity={scrollProgress} />
+      <TopBar
+        brandOpacity={scrollProgress}
+        onSearchResults={handleSearchResults}
+        products={allProducts}
+      />
 
       <div
         className="pointer-events-none fixed left-0 top-0 z-50 transition-transform duration-100"
@@ -220,71 +239,39 @@ function Home() {
         }}
       >
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-6 text-2xl font-semibold text-gray-800 sm:mb-8 sm:text-3xl">
-            Products ({allProducts.length})
-          </h2>
-
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:gap-8">
-            {allProducts.slice(0, visibleCount).map((item) => (
-              <Link
-                to={`/product/${item.id}`}
-                key={`${item.id}-${item.title}`}
-                className="group touch-action-manipulation overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-100/50 backdrop-blur-sm transition-all duration-300 active:scale-[0.99] sm:hover:-translate-y-1 sm:hover:border-orange-300/60"
-              >
-                <img
-                  src={item.thumbnail}
-                  alt={item.title}
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 sm:aspect-auto sm:h-52 group-hover:scale-105"
-                />
-                <div className="space-y-1 p-2 sm:space-y-2 sm:p-4">
-                  <h3 className="truncate text-sm font-bold text-gray-800 sm:text-base md:text-lg">
-                    {item.title}
-                  </h3>
-                  <p className="line-clamp-2 text-xs leading-relaxed text-gray-500 sm:line-clamp-3 sm:text-sm">
-                    {item.description ||
-                      "Premium quality item crafted for everyday style and comfort."}
-                  </p>
-                  <p className="text-xs font-semibold text-orange-500 sm:text-sm">
-                    ${item.price}
-                  </p>
-                </div>
-              </Link>
-            ))}
+          {/* Mobile Search Bar - Hidden on desktop */}
+          <div className="mb-8 lg:hidden">
+            <SearchBar
+              products={allProducts}
+              onSearchResults={handleSearchResults}
+              placeholder="Search for products by name or description..."
+            />
           </div>
 
-          {/* See More and All Products Buttons */}
-          <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
-            {visibleCount < allProducts.length && (
-              <button
-                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-orange-500/25 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
-                onClick={() =>
-                  setVisibleCount((prev) =>
-                    Math.min(prev + 6, allProducts.length),
-                  )
-                }
-              >
-                <svg
-                  className="mr-2 h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-                See More
-              </button>
-            )}
-            <Link
-              to="/products"
-              className="inline-flex items-center justify-center rounded-xl border-2 border-orange-400/50 bg-white/80 px-6 py-3 text-sm font-semibold text-orange-600 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-orange-500 hover:bg-orange-50/50 hover:text-orange-700 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
-            >
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-semibold text-gray-800 sm:text-3xl">
+              {isSearchActive ? (
+                <>
+                  Search Results ({displayProducts.length})
+                  {isSearchActive && (
+                    <button
+                      onClick={handleSearchReset}
+                      className="ml-3 text-sm font-normal text-orange-600 hover:text-orange-700 transition-colors"
+                    >
+                      Clear search
+                    </button>
+                  )}
+                </>
+              ) : (
+                <>Products ({allProducts.length})</>
+              )}
+            </h2>
+          </div>
+
+          {displayProducts.length === 0 && isSearchActive ? (
+            <div className="text-center py-12">
               <svg
-                className="mr-2 h-4 w-4"
+                className="mx-auto h-12 w-12 text-gray-400 mb-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -293,22 +280,111 @@ function Home() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
               </svg>
-              All Products
-            </Link>
-          </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No products found
+              </h3>
+              <p className="text-gray-500 mb-4">
+                Try searching with different keywords or browse all products.
+              </p>
+              <button
+                onClick={handleSearchReset}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 transition-colors"
+              >
+                Browse all products
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:gap-8">
+                {displayProducts.slice(0, visibleCount).map((item) => (
+                  <Link
+                    to={`/product/${item.id}`}
+                    key={`${item.id}-${item.title}`}
+                    className="group touch-action-manipulation overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-100/50 backdrop-blur-sm transition-all duration-300 active:scale-[0.99] sm:hover:-translate-y-1 sm:hover:border-orange-300/60"
+                  >
+                    <img
+                      src={item.thumbnail}
+                      alt={item.title}
+                      className="aspect-[4/3] w-full object-cover transition-transform duration-500 sm:aspect-auto sm:h-52 group-hover:scale-105"
+                    />
+                    <div className="space-y-1 p-2 sm:space-y-2 sm:p-4">
+                      <h3 className="truncate text-sm font-bold text-gray-800 sm:text-base md:text-lg">
+                        {item.title}
+                      </h3>
+                      <p className="line-clamp-2 text-xs leading-relaxed text-gray-500 sm:line-clamp-3 sm:text-sm">
+                        {item.description ||
+                          "Premium quality item crafted for everyday style and comfort."}
+                      </p>
+                      <p className="text-xs font-semibold text-orange-500 sm:text-sm">
+                        ${item.price}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* See More and All Products Buttons */}
+              <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+                {!isSearchActive && visibleCount < displayProducts.length && (
+                  <button
+                    className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-orange-500/25 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
+                    onClick={() =>
+                      setVisibleCount((prev) =>
+                        Math.min(prev + 6, displayProducts.length),
+                      )
+                    }
+                  >
+                    <svg
+                      className="mr-2 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                    See More
+                  </button>
+                )}
+                <Link
+                  to="/products"
+                  className="inline-flex items-center justify-center rounded-xl border-2 border-orange-400/50 bg-white/80 px-6 py-3 text-sm font-semibold text-orange-600 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-orange-500 hover:bg-orange-50/50 hover:text-orange-700 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
+                >
+                  <svg
+                    className="mr-2 h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                    />
+                  </svg>
+                  All Products
+                </Link>
+              </div>
+            </>
+          )}
 
           <div className="mt-8 rounded-2xl border border-orange-200 bg-white/90 p-4 shadow-lg shadow-orange-100/30 sm:mt-10 sm:p-6">
             <p className="text-xs uppercase tracking-widest text-orange-500 sm:text-sm">
               Now Highlighting
             </p>
             <h3 className="mt-2 text-xl font-bold text-gray-800 sm:text-2xl">
-              {product.title}
+              {product?.title || "Pick Fashion"}
             </h3>
             <p className="mt-2 max-w-3xl text-sm text-gray-500 sm:text-base">
-              {product.description ||
+              {product?.description ||
                 "Limited-time featured product from our curated collection."}
             </p>
           </div>

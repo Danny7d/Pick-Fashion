@@ -122,6 +122,12 @@ export async function updateOrderStatus(orderId, status) {
     p_status: status,
   });
   requireNoError(error, "Failed to update order");
+
+  const result = Array.isArray(data) ? data[0] : data;
+  if (result && result.success === false) {
+    throw new Error(result.message || "Failed to update order");
+  }
+
   return data;
 }
 

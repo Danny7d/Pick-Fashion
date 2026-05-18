@@ -50,8 +50,13 @@ const Orders = () => {
   }, [orders, search, statusFilter]);
 
   const handleStatus = async (orderId, status) => {
-    await updateOrderStatus(orderId, status);
-    await loadOrders();
+    setError("");
+    try {
+      await updateOrderStatus(orderId, status);
+      await loadOrders();
+    } catch (nextError) {
+      setError(nextError.message);
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { formatMoney } from "./currency";
 import { supabase } from "./supabaseClient";
 import TopBar from "./TopBar";
 
@@ -102,7 +103,7 @@ function Orders() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FDF8F3] text-gray-800">
+    <div className="motion-page min-h-screen bg-[#FDF8F3] text-gray-800">
       <TopBar brandOpacity={1} />
 
       <div className="px-4 pb-24 pt-[calc(5rem+env(safe-area-inset-top))] sm:px-8 md:px-16">
@@ -129,7 +130,7 @@ function Orders() {
 
           {/* Empty State */}
           {!loading && orders.length === 0 && !error && (
-            <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg shadow-gray-100/50">
+            <div className="motion-card rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg shadow-gray-100/50">
               <div className="mb-4 text-6xl">📦</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-800">
                 No Orders Yet
@@ -139,7 +140,7 @@ function Orders() {
               </p>
               <Link
                 to="/products"
-                className="inline-block rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 font-semibold text-white shadow-md transition-all hover:scale-[1.02] hover:shadow-lg"
+                className="motion-button animated-sheen inline-block rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 font-semibold text-white shadow-md"
               >
                 Browse Products
               </Link>
@@ -151,7 +152,7 @@ function Orders() {
             {orders.map((order) => (
               <div
                 key={order.id}
-                className="overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-md shadow-gray-100/30 sm:p-6"
+                className="motion-card overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-md shadow-gray-100/30 sm:p-6"
               >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                   {/* Product Image */}
@@ -182,10 +183,10 @@ function Orders() {
 
                     <div className="mb-3 text-sm text-gray-500">
                       <p>
-                        Qty: {order.quantity} × ${order.unit_price}
+                        Qty: {order.quantity} × {formatMoney(order.unit_price)}
                       </p>
                       <p className="text-orange-500 font-semibold">
-                        Total: ${order.total_amount}
+                        Total: {formatMoney(order.total_amount)}
                       </p>
                     </div>
 
@@ -203,13 +204,13 @@ function Orders() {
                           href={`https://t.me/Rutha_5?text=Hello, I'm following up on Order ${order.id.slice(0, 8)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="rounded-lg bg-blue-50 px-4 py-2 text-center text-sm font-medium text-blue-500 transition-colors hover:bg-blue-100"
+                          className="motion-button rounded-lg bg-blue-50 px-4 py-2 text-center text-sm font-medium text-blue-500 hover:bg-blue-100"
                         >
                           Message on Telegram
                         </a>
                         <button
                           onClick={() => handleCancel(order.id)}
-                          className="rounded-lg border border-red-300 bg-white px-4 py-2 text-center text-sm font-medium text-red-500 transition-colors hover:bg-red-50"
+                          className="motion-button rounded-lg border border-red-300 bg-white px-4 py-2 text-center text-sm font-medium text-red-500 hover:bg-red-50"
                         >
                           Cancel Order
                         </button>

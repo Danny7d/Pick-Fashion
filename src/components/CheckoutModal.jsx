@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { formatMoney } from "./currency";
 import { supabase } from "./supabaseClient";
 
 function CheckoutModal({ cart, total, onClose, onSuccess }) {
@@ -105,7 +106,7 @@ function CheckoutModal({ cart, total, onClose, onSuccess }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
       onClick={handleBackdropClick}
     >
-      <div className="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
+      <div className="motion-scale-in w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-xl font-bold text-white">
@@ -170,13 +171,13 @@ function CheckoutModal({ cart, total, onClose, onSuccess }) {
               </div>
               <div className="flex justify-between text-lg font-bold">
                 <span className="text-white">Total:</span>
-                <span className="text-cyan-400">${total.toFixed(2)}</span>
+                <span className="text-cyan-400">{formatMoney(total)}</span>
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 py-3 font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="motion-button animated-sheen w-full rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 py-3 font-semibold text-white"
             >
               Continue to Payment
             </button>
@@ -189,7 +190,7 @@ function CheckoutModal({ cart, total, onClose, onSuccess }) {
             <div className="space-y-3">
               {/* Chapa Option */}
               <label
-                className={`flex cursor-pointer items-center gap-4 rounded-lg border p-4 transition-all ${
+                className={`motion-button flex cursor-pointer items-center gap-4 rounded-lg border p-4 ${
                   paymentMethod === "chapa"
                     ? "border-cyan-500 bg-cyan-500/10"
                     : "border-slate-600 bg-slate-800"
@@ -212,7 +213,7 @@ function CheckoutModal({ cart, total, onClose, onSuccess }) {
 
               {/* Telebirr Option */}
               <label
-                className={`flex cursor-pointer items-center gap-4 rounded-lg border p-4 transition-all ${
+                className={`motion-button flex cursor-pointer items-center gap-4 rounded-lg border p-4 ${
                   paymentMethod === "telebirr"
                     ? "border-cyan-500 bg-cyan-500/10"
                     : "border-slate-600 bg-slate-800"
@@ -237,14 +238,14 @@ function CheckoutModal({ cart, total, onClose, onSuccess }) {
             <div className="flex gap-3 pt-4">
               <button
                 onClick={() => setStep(1)}
-                className="flex-1 rounded-lg border border-slate-600 bg-slate-800 py-3 font-semibold text-slate-300 transition-all hover:bg-slate-700"
+                className="motion-button flex-1 rounded-lg border border-slate-600 bg-slate-800 py-3 font-semibold text-slate-300 hover:bg-slate-700"
               >
                 Back
               </button>
               <button
                 onClick={handleCreateOrder}
                 disabled={loading}
-                className="flex-1 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 py-3 font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                className="motion-button flex-1 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 py-3 font-semibold text-white disabled:opacity-50"
               >
                 {loading ? "Processing..." : "Pay Now"}
               </button>
@@ -281,7 +282,7 @@ function CheckoutModal({ cart, total, onClose, onSuccess }) {
                 onClose();
                 window.location.href = "/orders";
               }}
-              className="w-full rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 py-3 font-semibold text-white transition-all hover:scale-[1.02]"
+              className="motion-button w-full rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 py-3 font-semibold text-white"
             >
               View My Orders
             </button>

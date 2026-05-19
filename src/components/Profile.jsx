@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import TopBar from "./TopBar";
 import { UserAuth } from "./context/AuthContext";
+import { formatMoney } from "./currency";
 import { getOrders, getSavedProducts } from "./userData";
 import { supabase } from "./supabaseClient";
 
@@ -69,7 +70,7 @@ function Profile() {
   }
 
   return (
-    <div className="min-h-dvh bg-[#FDF8F3] px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[calc(5.25rem+env(safe-area-inset-top))] text-gray-800 sm:px-6 md:px-10 md:py-24">
+    <div className="motion-page min-h-dvh bg-[#FDF8F3] px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[calc(5.25rem+env(safe-area-inset-top))] text-gray-800 sm:px-6 md:px-10 md:py-24">
       <TopBar />
       <div className="mx-auto max-w-4xl">
         <h1 className="text-2xl font-black sm:text-3xl">Your profile</h1>
@@ -86,7 +87,7 @@ function Profile() {
               key={t.id}
               type="button"
               onClick={() => setSearchParams({ tab: t.id })}
-              className={`touch-action-manipulation shrink-0 rounded-md px-4 py-2.5 text-sm font-semibold transition min-h-[44px] sm:py-2 ${
+              className={`motion-button touch-action-manipulation min-h-[44px] shrink-0 rounded-md px-4 py-2.5 text-sm font-semibold sm:py-2 ${
                 tab === t.id
                   ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md"
                   : "bg-gray-100 text-gray-600 sm:bg-transparent sm:hover:bg-gray-100"
@@ -106,7 +107,7 @@ function Profile() {
                 orders.map((o) => (
                   <div
                     key={o.id}
-                    className="rounded-xl border border-gray-200 bg-white p-4 shadow-md"
+                    className="motion-card rounded-xl border border-gray-200 bg-white p-4 shadow-md"
                   >
                     <div className="flex gap-3 sm:gap-4">
                       {o.thumbnail && (
@@ -118,7 +119,9 @@ function Profile() {
                       )}
                       <div className="min-w-0">
                         <p className="font-semibold text-gray-800">{o.title}</p>
-                        <p className="text-sm text-orange-500">${o.price}</p>
+                        <p className="price-chip mt-1 text-sm">
+                          {formatMoney(o.price)}
+                        </p>
                         <p className="text-xs text-gray-400">
                           {o.purchasedAt &&
                             new Date(o.purchasedAt).toLocaleString()}
@@ -145,7 +148,7 @@ function Profile() {
                   <Link
                     key={p.id}
                     to={`/product/${p.id}`}
-                    className="touch-action-manipulation flex gap-3 rounded-xl border border-gray-200 bg-white p-3 shadow-md transition hover:border-orange-300"
+                    className="motion-card touch-action-manipulation flex gap-3 rounded-xl border border-gray-200 bg-white p-3 shadow-md hover:border-orange-300"
                   >
                     <img
                       src={p.thumbnail}
@@ -154,7 +157,9 @@ function Profile() {
                     />
                     <div className="min-w-0">
                       <p className="font-medium text-gray-800">{p.title}</p>
-                      <p className="text-sm text-orange-500">${p.price}</p>
+                      <p className="price-chip mt-1 text-sm">
+                        {formatMoney(p.price)}
+                      </p>
                     </div>
                   </Link>
                 ))
@@ -163,7 +168,7 @@ function Profile() {
           )}
 
           {tab === "account" && (
-            <div className="rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-600 sm:p-6 sm:text-base shadow-md">
+            <div className="motion-card rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-600 shadow-md sm:p-6 sm:text-base">
               <p>
                 Username:{" "}
                 <span className="text-gray-900 font-medium">

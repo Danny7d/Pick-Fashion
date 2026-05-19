@@ -1,5 +1,6 @@
 // Simple Product Card with Buy Button
 import { useState } from "react";
+import { formatMoney } from "./currency";
 import TelegramCheckout from "./TelegramCheckout";
 
 // Example product - replace with your actual product data
@@ -15,7 +16,7 @@ export default function ProductCardWithBuy({ product = exampleProduct }) {
   const [showCheckout, setShowCheckout] = useState(false);
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-orange-200 bg-white shadow-lg shadow-orange-100/30 transition-all duration-300 hover:shadow-xl hover:shadow-orange-200/40">
+    <div className="motion-card group relative overflow-hidden rounded-2xl border border-orange-200 bg-white shadow-lg shadow-orange-100/30 hover:shadow-xl hover:shadow-orange-200/40">
       {/* Product Image */}
       <img
         src={product.thumbnail}
@@ -34,13 +35,13 @@ export default function ProductCardWithBuy({ product = exampleProduct }) {
 
         {/* Price and Buy Button */}
         <div className="mt-3 flex items-center justify-between">
-          <span className="text-xl font-bold text-orange-500">
-            ${product.price}
+          <span className="price-chip text-xl">
+            {formatMoney(product.price)}
           </span>
           
           <button
             onClick={() => setShowCheckout(true)}
-            className="rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:from-orange-600 hover:to-amber-600"
+            className="motion-button animated-sheen rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-2 text-sm font-semibold text-white hover:from-orange-600 hover:to-amber-600"
           >
             Buy Now
           </button>

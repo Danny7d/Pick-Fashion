@@ -1,4 +1,5 @@
 import { supabase } from "../supabaseClient";
+import { formatMoney } from "../currency";
 
 export const PRODUCT_STATUSES = ["active", "hidden", "sold_out"];
 export const ORDER_STATUSES = [
@@ -8,8 +9,8 @@ export const ORDER_STATUSES = [
   "cancelled",
 ];
 
-export function formatCurrency(amount, currency = "ETB") {
-  return `${currency} ${Number(amount || 0).toLocaleString()}`;
+export function formatCurrency(amount) {
+  return formatMoney(amount);
 }
 
 export function formatDate(value, fallback = "—") {
@@ -174,19 +175,24 @@ export async function fetchAdminSettings() {
     .eq("id", 1)
     .maybeSingle();
   requireNoError(error, "Failed to load settings");
-  return (
-    data || {
-      id: 1,
-      store_name: "Pick Fashion",
-      store_email: "pickfashionzr@gmail.com",
-      store_phone: "",
-      currency: "ETB",
-      low_stock_threshold: 3,
-      notify_new_orders: true,
-      notify_low_stock: true,
-      notify_customer_messages: true,
-    }
-  );
+
+  const defaults = {
+    id: 1,
+    store_name: "Pick Fashion",
+    store_email: "pickfashionzr@gmail.com",
+    store_phone: "",
+    currency: "Br",
+    low_stock_threshold: 3,
+    notify_new_orders: true,
+    notify_low_stock: true,
+    notify_customer_messages: true,
+  };
+
+  return {
+    ...defaults,
+    ...(data || {}),
+    currency: data?.currency && data.currency !== "ETB" ? data.currency : "Br",
+  };
 }
 
 export async function saveAdminSettings(settings) {

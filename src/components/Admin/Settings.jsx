@@ -21,7 +21,7 @@ const Settings = () => {
             store_name: "Pick Fashion",
             store_email: "pickfashionzr@gmail.com",
             store_phone: "",
-            currency: "ETB",
+            currency: "Br",
             low_stock_threshold: 3,
             notify_new_orders: true,
             notify_low_stock: true,
@@ -59,7 +59,7 @@ const Settings = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="motion-page space-y-6">
       <div>
         <h1 className="text-3xl font-black text-slate-950">Settings</h1>
         <p className="mt-1 text-sm text-slate-500">
@@ -68,7 +68,7 @@ const Settings = () => {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
-        <section className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+        <section className="motion-card admin-surface rounded-3xl p-6">
           <h2 className="text-lg font-black text-slate-950">Admin profile</h2>
           <div className="mt-5 space-y-4 text-sm">
             <ReadOnlyField label="Username" value={profile?.username || "—"} />
@@ -77,7 +77,7 @@ const Settings = () => {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+        <section className="motion-card admin-surface rounded-3xl p-6">
           <h2 className="text-lg font-black text-slate-950">Store settings</h2>
           <div className="mt-5 grid gap-4">
             <EditableField label="Store name">
@@ -117,9 +117,7 @@ const Settings = () => {
                   }
                   className="w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm outline-none ring-orange-500 focus:ring-2"
                 >
-                  <option value="ETB">ETB</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
+                  <option value="Br">Br</option>
                 </select>
               </EditableField>
               <EditableField label="Low stock threshold">
@@ -138,7 +136,7 @@ const Settings = () => {
         </section>
       </div>
 
-      <section className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+      <section className="motion-card admin-surface rounded-3xl p-6">
         <h2 className="text-lg font-black text-slate-950">Notifications</h2>
         <div className="mt-5 space-y-4">
           <ToggleRow
@@ -172,7 +170,7 @@ const Settings = () => {
           type="button"
           onClick={handleSave}
           disabled={saving}
-          className="rounded-xl bg-orange-500 px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
+          className="motion-button animated-sheen rounded-xl bg-orange-500 px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
         >
           {saving ? "Saving..." : "Save settings"}
         </button>

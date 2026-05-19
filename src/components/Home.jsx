@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import TopBar from "./TopBar";
 import SearchBar from "./SearchBar";
+import { formatMoney } from "./currency";
 import { useCatalogProducts } from "./useCatalogProducts";
 
 function Home() {
@@ -80,7 +81,7 @@ function Home() {
   );
 
   return (
-    <div className="relative bg-[#FDF8F3] text-gray-800 min-h-screen">
+    <div className="motion-page relative min-h-screen bg-[#FDF8F3] text-gray-800">
       <TopBar
         brandOpacity={scrollProgress}
         onSearchResults={handleSearchResults}
@@ -133,7 +134,7 @@ function Home() {
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
               <Link
                 to="/products"
-                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-orange-500/25 active:scale-95 sm:px-10 sm:py-4.5 sm:text-lg"
+                className="motion-button animated-sheen inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4 text-base font-bold text-white shadow-lg sm:px-10 sm:py-4.5 sm:text-lg"
               >
                 <svg
                   className="mr-3 h-5 w-5"
@@ -154,7 +155,7 @@ function Home() {
                 href="https://t.me/Rutha_5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-xl border-2 border-orange-400/50 bg-white/80 px-8 py-4 text-base font-bold text-orange-600 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-orange-500 hover:bg-orange-50/50 hover:text-orange-700 active:scale-95 sm:px-10 sm:py-4.5 sm:text-lg"
+                className="motion-button inline-flex items-center justify-center rounded-xl border-2 border-orange-400/50 bg-white/80 px-8 py-4 text-base font-bold text-orange-600 shadow-lg backdrop-blur-sm hover:border-orange-500 hover:bg-orange-50/50 hover:text-orange-700 sm:px-10 sm:py-4.5 sm:text-lg"
               >
                 <svg
                   className="mr-3 h-5 w-5"
@@ -168,7 +169,7 @@ function Home() {
             </div>
 
             {/* Trust Signals */}
-            <div className="mt-8 rounded-2xl border border-orange-200 bg-white/90 p-4 shadow-lg shadow-orange-100/30 sm:mt-10 sm:p-6">
+            <div className="motion-card mt-8 rounded-2xl border border-orange-200 bg-white/90 p-4 shadow-lg shadow-orange-100/30 sm:mt-10 sm:p-6">
               <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
                 <div className="flex items-center gap-2">
                   <svg
@@ -303,7 +304,7 @@ function Home() {
                   <Link
                     to={`/product/${item.id}`}
                     key={`${item.id}-${item.title}`}
-                    className="group touch-action-manipulation overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-100/50 backdrop-blur-sm transition-all duration-300 active:scale-[0.99] sm:hover:-translate-y-1 sm:hover:border-orange-300/60"
+                  className="motion-card group touch-action-manipulation overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-100/50 backdrop-blur-sm active:scale-[0.99] sm:hover:border-orange-300/60"
                   >
                     <img
                       src={item.thumbnail}
@@ -318,8 +319,8 @@ function Home() {
                         {item.description ||
                           "Premium quality item crafted for everyday style and comfort."}
                       </p>
-                      <p className="text-xs font-semibold text-orange-500 sm:text-sm">
-                        ${item.price}
+                      <p className="price-chip text-xs sm:text-sm">
+                        {formatMoney(item.price)}
                       </p>
                     </div>
                   </Link>
@@ -330,7 +331,7 @@ function Home() {
               <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
                 {!isSearchActive && visibleCount < displayProducts.length && (
                   <button
-                    className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-orange-500/25 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
+                    className="motion-button animated-sheen inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-lg sm:px-8 sm:py-3.5 sm:text-base"
                     onClick={() =>
                       setVisibleCount((prev) =>
                         Math.min(prev + 6, displayProducts.length),
@@ -355,7 +356,7 @@ function Home() {
                 )}
                 <Link
                   to="/products"
-                  className="inline-flex items-center justify-center rounded-xl border-2 border-orange-400/50 bg-white/80 px-6 py-3 text-sm font-semibold text-orange-600 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-orange-500 hover:bg-orange-50/50 hover:text-orange-700 active:scale-95 sm:px-8 sm:py-3.5 sm:text-base"
+                  className="motion-button inline-flex items-center justify-center rounded-xl border-2 border-orange-400/50 bg-white/80 px-6 py-3 text-sm font-semibold text-orange-600 shadow-lg backdrop-blur-sm hover:border-orange-500 hover:bg-orange-50/50 hover:text-orange-700 sm:px-8 sm:py-3.5 sm:text-base"
                 >
                   <svg
                     className="mr-2 h-4 w-4"
@@ -376,7 +377,7 @@ function Home() {
             </>
           )}
 
-          <div className="mt-8 rounded-2xl border border-orange-200 bg-white/90 p-4 shadow-lg shadow-orange-100/30 sm:mt-10 sm:p-6">
+          <div className="motion-card mt-8 rounded-2xl border border-orange-200 bg-white/90 p-4 shadow-lg shadow-orange-100/30 sm:mt-10 sm:p-6">
             <p className="text-xs uppercase tracking-widest text-orange-500 sm:text-sm">
               Now Highlighting
             </p>
@@ -405,7 +406,7 @@ function Home() {
             {/* Phone */}
             <a
               href="tel:+251913950321"
-              className="flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50 transition-all duration-200 hover:scale-105 hover:shadow-lg"
+              className="motion-card flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 sm:h-12 sm:w-12">
                 <svg
@@ -435,7 +436,7 @@ function Home() {
               href="https://t.me/Rutha_5"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50 transition-all duration-200 hover:scale-105 hover:shadow-lg"
+              className="motion-card flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 sm:h-12 sm:w-12">
                 <svg
@@ -457,7 +458,7 @@ function Home() {
             {/* Email */}
             <a
               href="mailto:pickfashionzr@gmail.com"
-              className="flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50 transition-all duration-200 hover:scale-105 hover:shadow-lg"
+              className="motion-card flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow-md shadow-gray-100/50"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100 sm:h-12 sm:w-12">
                 <svg

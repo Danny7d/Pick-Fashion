@@ -41,7 +41,7 @@ const AdminLayout = () => {
       : location.pathname.startsWith(path);
 
   return (
-    <div className="min-h-screen bg-stone-100 text-slate-900 lg:flex">
+    <div className="min-h-screen bg-[linear-gradient(135deg,#fafaf9_0%,#fff7ed_48%,#eef2ff_100%)] text-slate-900 lg:flex">
       {sidebarOpen && (
         <button
           type="button"
@@ -52,7 +52,7 @@ const AdminLayout = () => {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-stone-200 bg-white transition-transform lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-stone-200 bg-white/95 shadow-2xl shadow-slate-200/60 backdrop-blur transition-transform lg:static lg:translate-x-0 lg:shadow-none ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -81,7 +81,7 @@ const AdminLayout = () => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setSidebarOpen(false)}
-                  className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                  className={`motion-button flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold ${
                     isActive(item.path)
                       ? "bg-orange-500 text-white shadow-lg shadow-orange-200"
                       : "text-slate-600 hover:bg-stone-100"
@@ -108,7 +108,7 @@ const AdminLayout = () => {
       </aside>
 
       <div className="flex min-h-screen flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/90 px-4 py-4 backdrop-blur lg:px-8">
+        <header className="sticky top-0 z-30 border-b border-white/70 bg-white/75 px-4 py-4 shadow-sm shadow-slate-200/50 backdrop-blur-xl lg:px-8">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <button
@@ -118,17 +118,17 @@ const AdminLayout = () => {
               >
                 <FiMenu size={20} />
               </button>
-              <div className="hidden items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-slate-500 md:flex">
+              <div className="hidden items-center gap-2 rounded-xl border border-stone-200 bg-white/80 px-4 py-2 text-sm text-slate-500 shadow-inner md:flex">
                 <FiSearch size={16} />
                 <span>Products, customers, orders</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="relative rounded-xl border border-stone-200 p-2">
+              <div className="motion-button relative rounded-xl border border-stone-200 bg-white/80 p-2">
                 <FiBell size={18} className="text-slate-600" />
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-3 py-2">
+              <div className="motion-card flex items-center gap-3 rounded-2xl border border-stone-200 bg-white/80 px-3 py-2">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
                   {(profile?.username || "A").charAt(0).toUpperCase()}
                 </div>

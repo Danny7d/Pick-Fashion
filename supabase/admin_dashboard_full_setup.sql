@@ -454,7 +454,7 @@ CREATE TABLE IF NOT EXISTS public.admin_settings (
   store_name text NOT NULL DEFAULT 'Pick Fashion',
   store_email text NOT NULL DEFAULT 'pickfashionzr@gmail.com',
   store_phone text NOT NULL DEFAULT '',
-  currency text NOT NULL DEFAULT 'ETB',
+  currency text NOT NULL DEFAULT 'Br',
   low_stock_threshold integer NOT NULL DEFAULT 3 CHECK (low_stock_threshold >= 0),
   notify_new_orders boolean NOT NULL DEFAULT true,
   notify_low_stock boolean NOT NULL DEFAULT true,
@@ -464,8 +464,12 @@ CREATE TABLE IF NOT EXISTS public.admin_settings (
 );
 
 INSERT INTO public.admin_settings (id, store_name, store_email, store_phone, currency)
-VALUES (1, 'Pick Fashion', 'pickfashionzr@gmail.com', '', 'ETB')
+VALUES (1, 'Pick Fashion', 'pickfashionzr@gmail.com', '', 'Br')
 ON CONFLICT (id) DO NOTHING;
+
+UPDATE public.admin_settings
+SET currency = 'Br'
+WHERE id = 1;
 
 DROP TRIGGER IF EXISTS admin_settings_updated_at ON public.admin_settings;
 CREATE TRIGGER admin_settings_updated_at

@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import TopBar from "./TopBar";
+import { formatMoney } from "./currency";
 import { useCatalogProducts } from "./useCatalogProducts";
 
 function AllProducts() {
   const { products: allProducts } = useCatalogProducts();
 
   return (
-    <div className="min-h-screen bg-[#FDF8F3] text-gray-800">
+    <div className="motion-page min-h-screen bg-[#FDF8F3] text-gray-800">
       <TopBar brandOpacity={1} products={allProducts} />
 
       <div className="px-4 pb-24 pt-[calc(5rem+env(safe-area-inset-top))] sm:px-8 md:px-16">
@@ -33,7 +34,7 @@ function AllProducts() {
               <Link
                 to={`/product/${item.id}`}
                 key={`${item.id}-${item.title}`}
-                className="group touch-action-manipulation overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg shadow-gray-100/50 backdrop-blur-sm transition-all duration-300 active:scale-[0.99] sm:rounded-2xl sm:hover:-translate-y-1 sm:hover:border-orange-300"
+                className="motion-card group touch-action-manipulation overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg shadow-gray-100/50 backdrop-blur-sm active:scale-[0.99] sm:rounded-2xl sm:hover:border-orange-300"
               >
                 <img
                   src={item.thumbnail}
@@ -49,8 +50,8 @@ function AllProducts() {
                     {item.description ||
                       "Premium quality item crafted for everyday style and comfort."}
                   </p>
-                  <p className="text-xs font-semibold text-orange-500 sm:text-sm">
-                    ${item.price}
+                  <p className="price-chip text-xs sm:text-sm">
+                    {formatMoney(item.price)}
                   </p>
                 </div>
               </Link>

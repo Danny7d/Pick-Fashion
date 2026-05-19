@@ -31,7 +31,7 @@ const Analytics = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="motion-page space-y-6">
       <div>
         <h1 className="text-3xl font-black text-slate-950">Analytics</h1>
         <p className="mt-1 text-sm text-slate-500">
@@ -56,13 +56,13 @@ const Analytics = () => {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
-        <section className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+        <section className="motion-card admin-surface rounded-3xl p-6">
           <h2 className="text-lg font-black text-slate-950">Top products</h2>
           <div className="mt-5 space-y-3">
             {snapshot.topProducts.map((product) => (
               <div
                 key={product.id}
-                className="flex items-center justify-between rounded-2xl bg-stone-50 px-4 py-3"
+                className="motion-card flex items-center justify-between rounded-2xl bg-stone-50 px-4 py-3"
               >
                 <div>
                   <p className="font-semibold text-slate-950">{product.name}</p>
@@ -81,13 +81,13 @@ const Analytics = () => {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+        <section className="motion-card admin-surface rounded-3xl p-6">
           <h2 className="text-lg font-black text-slate-950">Recent orders</h2>
           <div className="mt-5 space-y-3">
             {snapshot.recentOrders.map((order) => (
               <div
                 key={order.id}
-                className="rounded-2xl bg-stone-50 px-4 py-3"
+                className="motion-card rounded-2xl bg-stone-50 px-4 py-3"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div>
@@ -118,7 +118,7 @@ const Analytics = () => {
 };
 
 const MetricCard = ({ label, value }) => (
-  <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
+  <div className="motion-card admin-surface rounded-3xl p-6">
     <p className="text-sm text-slate-500">{label}</p>
     <p className="mt-3 text-3xl font-black text-slate-950">{value}</p>
   </div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { formatMoney } from "./currency";
 
 // Simple Buy Button that redirects to Telegram with full product details
 // No database storage, no forms - just direct contact
@@ -13,7 +14,7 @@ function SimpleTelegramBuy({ product }) {
     const message = `🛒 *New Order Inquiry*
 
 📦 *Product:* ${product.title}
-💰 *Price:* $${product.price}
+💰 *Price:* ${formatMoney(product.price)}
 📝 *Description:* ${product.description || "No description available"}
 
 🔗 *Product Link:* ${window.location.origin}/product/${product.id}
@@ -40,7 +41,7 @@ Hello! I'm interested in buying this product. Please contact me to complete the 
       {/* Buy Button */}
       <button
         onClick={handleBuyClick}
-        className="w-full rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 py-3 font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
+        className="motion-button w-full rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 py-3 font-semibold text-white"
       >
         Buy on Telegram
       </button>
@@ -53,7 +54,7 @@ Hello! I'm interested in buying this product. Please contact me to complete the 
             e.target === e.currentTarget && setShowConfirmation(false)
           }
         >
-          <div className="w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-900 p-6 text-center shadow-2xl">
+          <div className="motion-scale-in w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-900 p-6 text-center shadow-2xl">
             <div className="mb-4 text-5xl">💬</div>
 
             <h3 className="mb-2 text-xl font-bold text-white">
@@ -68,7 +69,7 @@ Hello! I'm interested in buying this product. Please contact me to complete the 
             <div className="mb-4 rounded-lg bg-slate-800 p-3 text-left">
               <p className="text-xs text-slate-500">Product:</p>
               <p className="font-semibold text-white">{product.title}</p>
-              <p className="text-cyan-400">${product.price}</p>
+              <p className="text-cyan-400">{formatMoney(product.price)}</p>
             </div>
 
             <div className="flex gap-3">
@@ -99,7 +100,7 @@ function DirectTelegramBuy({ product, className = "" }) {
   // For bots, we use ?start parameter with encoded data
   const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(
     `🛒 Order Inquiry: ${product.title}
-💰 Price: $${product.price}
+💰 Price: ${formatMoney(product.price)}
 📍 View: ${window.location.origin}/product/${product.id}
 
 Hi! I want to buy this.`,
@@ -110,7 +111,7 @@ Hi! I want to buy this.`,
       href={telegramUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2 rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white transition-all hover:scale-[1.02] hover:bg-blue-600 ${className}`}
+      className={`motion-button inline-flex items-center justify-center gap-2 rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white hover:bg-blue-600 ${className}`}
     >
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
@@ -137,8 +138,8 @@ function ProductCardWithTelegramBuy({ product }) {
           {product.description}
         </p>
         <div className="mt-3 flex items-center justify-between">
-          <span className="text-lg font-semibold text-cyan-400">
-            ${product.price}
+          <span className="price-chip text-lg">
+            {formatMoney(product.price)}
           </span>
           <DirectTelegramBuy product={product} className="px-4 py-2 text-sm" />
         </div>
@@ -160,7 +161,7 @@ function ProductDetailWithTelegramBuy({ product }) {
       </div>
       <div className="flex-1 space-y-6">
         <h1 className="text-3xl font-bold text-white">{product.title}</h1>
-        <p className="text-2xl text-cyan-400">${product.price}</p>
+        <p className="price-chip text-2xl">{formatMoney(product.price)}</p>
         <p className="text-slate-400 leading-relaxed">{product.description}</p>
 
         <DirectTelegramBuy product={product} className="w-full py-4 text-lg" />

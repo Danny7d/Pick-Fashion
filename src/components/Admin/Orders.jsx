@@ -60,7 +60,7 @@ const Orders = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="motion-page space-y-6">
       <div>
         <h1 className="text-3xl font-black text-slate-950">Orders</h1>
         <p className="mt-1 text-sm text-slate-500">
@@ -69,7 +69,7 @@ const Orders = () => {
         </p>
       </div>
 
-      <div className="grid gap-4 rounded-3xl border border-stone-200 bg-white p-5 shadow-sm lg:grid-cols-[1fr,220px]">
+      <div className="motion-card admin-surface grid gap-4 rounded-3xl p-5 lg:grid-cols-[1fr,220px]">
         <input
           type="text"
           value={search}
@@ -96,7 +96,7 @@ const Orders = () => {
         </div>
       )}
 
-      <div className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+      <div className="motion-card admin-surface overflow-hidden rounded-3xl">
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead className="bg-stone-50 text-left text-slate-500">
@@ -220,7 +220,7 @@ const ActionButton = ({ label, tone, onClick }) => (
   <button
     type="button"
     onClick={onClick}
-    className={`rounded-xl px-3 py-2 text-xs font-semibold text-white ${tone}`}
+    className={`motion-button rounded-xl px-3 py-2 text-xs font-semibold text-white ${tone}`}
   >
     {label}
   </button>

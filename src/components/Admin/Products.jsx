@@ -75,7 +75,7 @@ const Products = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="motion-page space-y-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <h1 className="text-3xl font-black text-slate-950">Products</h1>
@@ -89,14 +89,14 @@ const Products = () => {
             setEditingProduct(null);
             setShowModal(true);
           }}
-          className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-200"
+          className="motion-button animated-sheen inline-flex items-center gap-2 rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-200"
         >
           <FiPlus size={18} />
           <span>Add product</span>
         </button>
       </div>
 
-      <div className="grid gap-4 rounded-3xl border border-stone-200 bg-white p-5 shadow-sm lg:grid-cols-[1fr,220px]">
+      <div className="motion-card admin-surface grid gap-4 rounded-3xl p-5 lg:grid-cols-[1fr,220px]">
         <input
           type="text"
           value={search}
@@ -124,7 +124,7 @@ const Products = () => {
         </div>
       )}
 
-      <div className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+      <div className="motion-card admin-surface overflow-hidden rounded-3xl">
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead className="bg-stone-50 text-left text-slate-500">
@@ -194,14 +194,14 @@ const Products = () => {
                             setEditingProduct(product);
                             setShowModal(true);
                           }}
-                          className="rounded-xl border border-stone-200 p-2 text-slate-600"
+                          className="motion-button rounded-xl border border-stone-200 bg-white p-2 text-slate-600"
                         >
                           <FiEdit2 size={16} />
                         </button>
                         <button
                           type="button"
                           onClick={() => handleVisibility(product)}
-                          className="rounded-xl border border-stone-200 p-2 text-slate-600"
+                          className="motion-button rounded-xl border border-stone-200 bg-white p-2 text-slate-600"
                         >
                           {product.status === "hidden" ? (
                             <FiEye size={16} />
@@ -212,7 +212,7 @@ const Products = () => {
                         <button
                           type="button"
                           onClick={() => handleDelete(product.id)}
-                          className="rounded-xl border border-rose-200 p-2 text-rose-600"
+                          className="motion-button rounded-xl border border-rose-200 bg-white p-2 text-rose-600"
                         >
                           <FiTrash2 size={16} />
                         </button>
@@ -273,7 +273,7 @@ const ProductModal = ({ product, onClose, onSaved }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4">
-      <div className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] bg-white p-6 shadow-2xl">
+      <div className="motion-scale-in max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] bg-white p-6 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-black text-slate-950">
@@ -286,7 +286,7 @@ const ProductModal = ({ product, onClose, onSaved }) => {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl border border-stone-200 px-3 py-2 text-sm text-slate-600"
+            className="motion-button rounded-xl border border-stone-200 px-3 py-2 text-sm text-slate-600"
           >
             Close
           </button>
@@ -392,14 +392,14 @@ const ProductModal = ({ product, onClose, onSaved }) => {
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl border border-stone-200 px-4 py-3 text-sm font-semibold text-slate-600"
+              className="motion-button rounded-xl border border-stone-200 px-4 py-3 text-sm font-semibold text-slate-600"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
+              className="motion-button animated-sheen rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
             >
               {saving ? "Saving..." : "Save product"}
             </button>

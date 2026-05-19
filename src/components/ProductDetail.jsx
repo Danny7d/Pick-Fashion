@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserAuth } from "./context/AuthContext";
+import { formatMoney } from "./currency";
 import TopBar from "./TopBar";
 import { isProductSaved, toggleSavedProduct } from "./userData";
 import { useCatalogProducts } from "./useCatalogProducts";
@@ -63,7 +64,7 @@ function ProductDetail() {
   const handleConfirmTelegram = () => {
     const message = encodeURIComponent(
       `🛒 Order Inquiry: ${product.title}\n` +
-        `💰 Price: $${product.price}\n` +
+        `💰 Price: ${formatMoney(product.price)}\n` +
         `📍 View: ${window.location.origin}/product/${product.id}\n\n` +
         `Hi! I want to buy this product.`,
     );
@@ -81,17 +82,17 @@ function ProductDetail() {
   };
 
   return (
-    <div className="min-h-dvh bg-[#FDF8F3] px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[calc(5.25rem+env(safe-area-inset-top))] text-gray-800 sm:px-6 md:px-12 md:py-24">
+    <div className="motion-page min-h-dvh bg-[#FDF8F3] px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[calc(5.25rem+env(safe-area-inset-top))] text-gray-800 sm:px-6 md:px-12 md:py-24">
       <TopBar products={products} />
       <div className="mx-auto max-w-6xl">
         <Link
           to="/"
-          className="mb-4 inline-flex min-h-[44px] items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-600 touch-action-manipulation hover:border-orange-400 hover:text-orange-500 sm:mb-6"
+          className="motion-button mb-4 inline-flex min-h-[44px] items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-600 touch-action-manipulation hover:border-orange-400 hover:text-orange-500 sm:mb-6"
         >
           Back to products
         </Link>
 
-        <div className="grid gap-6 rounded-2xl border border-orange-100 bg-white p-4 shadow-lg shadow-orange-100/30 sm:gap-8 sm:p-6 md:grid-cols-2 md:p-8">
+        <div className="motion-card grid gap-6 rounded-2xl border border-orange-100 bg-white p-4 shadow-lg shadow-orange-100/30 sm:gap-8 sm:p-6 md:grid-cols-2 md:p-8">
           <img
             src={product.thumbnail}
             alt={product.title}
@@ -102,8 +103,8 @@ function ProductDetail() {
             <h1 className="text-2xl font-black leading-tight sm:text-3xl md:text-4xl">
               {product.title}
             </h1>
-            <p className="text-lg text-orange-500 sm:text-xl">
-              ${product.price}
+            <p className="price-chip text-lg sm:text-xl">
+              {formatMoney(product.price)}
             </p>
             <p className="text-sm leading-relaxed text-gray-500 sm:text-base">
               {product.description ||
@@ -114,14 +115,14 @@ function ProductDetail() {
               <button
                 type="button"
                 onClick={handleBuy}
-                className="touch-action-manipulation min-h-[48px] rounded-md bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-base font-semibold text-white shadow-md hover:shadow-lg"
+                className="motion-button animated-sheen touch-action-manipulation min-h-[48px] rounded-md bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-base font-semibold text-white shadow-md"
               >
                 Buy Now
               </button>
               <button
                 type="button"
                 onClick={handleSaveToggle}
-                className={`touch-action-manipulation min-h-[48px] rounded-md border px-6 py-3 text-base font-semibold transition ${
+                className={`motion-button touch-action-manipulation min-h-[48px] rounded-md border px-6 py-3 text-base font-semibold ${
                   saved
                     ? "border-orange-400 bg-orange-50 text-orange-600"
                     : "border-gray-300 text-gray-600 hover:border-orange-400"
@@ -154,7 +155,7 @@ function ProductDetail() {
             )}
 
             {showTelegramConfirm === true && (
-              <div className="space-y-4 rounded-xl border border-blue-200 bg-blue-50/80 p-5 shadow-md">
+              <div className="motion-scale-in space-y-4 rounded-xl border border-blue-200 bg-blue-50/80 p-5 shadow-md">
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">💬</div>
                   <div>
@@ -170,7 +171,9 @@ function ProductDetail() {
                 <div className="rounded-lg bg-white/80 p-3 shadow-sm">
                   <p className="text-xs text-gray-500">Product:</p>
                   <p className="font-semibold text-gray-800">{product.title}</p>
-                  <p className="text-orange-500">${product.price}</p>
+                  <p className="text-orange-500">
+                    {formatMoney(product.price)}
+                  </p>
                 </div>
 
                 <div className="flex gap-3">

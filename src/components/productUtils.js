@@ -11,7 +11,7 @@ const BLOCKED_KEYWORDS = [
   "coke",
 ];
 
-export const getFallbackProducts = () => {
+export const getFilteredProducts = () => {
   const mergedProducts = products.carts.flatMap((cart) => cart.products);
   const uniqueProducts = new Map();
 
@@ -34,19 +34,3 @@ export const getFallbackProducts = () => {
     );
   });
 };
-
-export const normalizeSupabaseProduct = (product) => ({
-  id: String(product.id),
-  title: product.name,
-  price: Number(product.price || 0),
-  description: product.description || "",
-  thumbnail: product.image_url || "",
-  category: product.category || "",
-  stock: product.stock ?? 0,
-  status: product.status || "active",
-  soldCount: product.sold_count ?? 0,
-  createdAt: product.created_at || null,
-  updatedAt: product.updated_at || null,
-});
-
-export const getFilteredProducts = () => getFallbackProducts();

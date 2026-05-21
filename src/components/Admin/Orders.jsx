@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { supabase } from "../supabaseClient";
 import {
   fetchOrderSummaries,
   formatCurrency,
@@ -28,6 +29,29 @@ const Orders = () => {
 
   useEffect(() => {
     loadOrders();
+
+    // Subscribe to realtime changes on orders and order_items
+    const channel = supabase
+      .channel("orders-realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "orders" },
+        () => {
+          loadOrders();
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "order_items" },
+        () => {
+          loadOrders();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const filteredOrders = useMemo(() => {

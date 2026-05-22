@@ -4,7 +4,8 @@ import { UserAuth } from "./context/AuthContext";
 import { supabase } from "./supabaseClient";
 
 function ProfileMenu() {
-  const { session, signOut } = UserAuth();
+  const { session, signOut, isAdmin } = UserAuth();
+  const user = session?.user;
   const [open, setOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [displayName, setDisplayName] = useState("");
@@ -25,7 +26,6 @@ function ProfileMenu() {
   }, []);
 
   useEffect(() => {
-    const user = session?.user;
     if (!user?.id) {
       setDisplayName("");
       return;
@@ -53,9 +53,9 @@ function ProfileMenu() {
     return () => {
       cancelled = true;
     };
-  }, [session?.user?.id, session?.user?.user_metadata?.username]);
+  }, [user]);
 
-  if (!session?.user) return null;
+  if (!user) return null;
 
   const label = displayName || "Member";
 
@@ -108,6 +108,15 @@ function ProfileMenu() {
             >
               Account
             </Link>
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="block px-4 py-3 text-sm text-cyan-200 hover:bg-slate-800 sm:py-2"
+                onClick={() => setOpen(false)}
+              >
+                Admin dashboard
+              </Link>
+            )}
             <hr className="my-1 border-slate-700" />
             <button
               type="button"

@@ -59,7 +59,9 @@ function Register() {
     }
 
     if (usernameStatus !== "available") {
-      setErrMsg("Wait for a valid, available username or fix the username field.");
+      setErrMsg(
+        "Wait for a valid, available username or fix the username field.",
+      );
       return;
     }
 
@@ -81,7 +83,7 @@ function Register() {
       } else {
         setErrMsg(result.error?.message || "Registration Failed");
       }
-    } catch (error) {
+    } catch {
       setLoading(false);
       setErrMsg("Registration Failed");
     }
@@ -93,27 +95,29 @@ function Register() {
         return null;
       case "invalid":
         return (
-          <p className="text-sm text-amber-200">
+          <p className="text-sm text-amber-600">
             Username must be 5–30 characters, start with a letter, and use
             letters, numbers, or underscores only.
           </p>
         );
       case "checking":
-        return <p className="text-sm text-slate-400">Checking username…</p>;
+        return <p className="text-sm text-gray-400">Checking username…</p>;
       case "available":
-        return <p className="text-sm text-emerald-300">Username is available.</p>;
+        return (
+          <p className="text-sm text-emerald-600">Username is available.</p>
+        );
       case "unavailable":
         return (
-          <p className="text-sm text-rose-200">
+          <p className="text-sm text-red-500">
             Username is already taken. Try another.
           </p>
         );
       case "error":
         return (
-          <p className="text-sm text-rose-200">
+          <p className="text-sm text-red-500">
             Could not check username. Confirm you ran{" "}
-            <code className="text-xs">supabase/profiles.sql</code> in the Supabase
-            SQL editor.
+            <code className="text-xs">supabase/profiles.sql</code> in the
+            Supabase SQL editor.
           </p>
         );
       default:
@@ -129,22 +133,22 @@ function Register() {
     usernameStatus === "available";
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-3 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[calc(5.25rem+env(safe-area-inset-top))] text-white sm:px-6 sm:pt-28">
+    <div className="min-h-dvh bg-[#FDF8F3] px-3 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[calc(5.25rem+env(safe-area-inset-top))] text-gray-800 sm:px-6 sm:pt-28">
       <BrandHomeLink />
-      <div className="mx-auto grid max-w-5xl overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/80 shadow-2xl sm:rounded-3xl md:grid-cols-2">
-        <div className="flex flex-col justify-between bg-gradient-to-br from-fuchsia-600/30 to-cyan-500/20 p-6 sm:p-8 md:p-10">
+      <div className="mx-auto grid max-w-5xl overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-lg shadow-orange-100/30 sm:rounded-3xl md:grid-cols-2">
+        <div className="flex flex-col justify-between bg-gradient-to-br from-amber-300/20 to-orange-400/20 p-6 sm:p-8 md:p-10">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">
+            <p className="text-xs uppercase tracking-[0.3em] text-orange-600">
               Pick Fashion
             </p>
             <h1 className="mt-4 text-3xl font-black leading-tight sm:text-4xl">
               Create Account
             </h1>
-            <p className="mt-4 text-slate-200">
+            <p className="mt-4 text-gray-600">
               Join Pick Fashion to buy products and track your orders.
             </p>
           </div>
-          <p className="text-sm text-slate-300">
+          <p className="text-sm text-gray-500">
             Fashion finds, ready when you are.
           </p>
         </div>
@@ -155,24 +159,19 @@ function Register() {
               <h2 className="text-2xl font-bold">Registration successful</h2>
               {needsEmailConfirmation ? (
                 <>
-                  <p className="text-slate-300">
+                  <p className="text-gray-500">
                     Check your email for a confirmation link from Pick Fashion.
                     You must confirm your email before you can log in.
                   </p>
-                  <p className="text-sm text-slate-400">
-                    If nothing arrives, check spam or wait a minute. In Supabase
-                    Dashboard → Authentication → Providers → Email, ensure
-                    &quot;Confirm email&quot; is enabled for this behavior.
-                  </p>
                 </>
               ) : (
-                <p className="text-slate-300">
+                <p className="text-gray-500">
                   Your account is ready. You can log in now.
                 </p>
               )}
               <Link
                 to="/login"
-                className="inline-block rounded-md bg-cyan-500 px-5 py-2 font-semibold text-slate-950"
+                className="inline-block rounded-md bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-2 font-semibold text-white shadow-md"
               >
                 Go to login
               </Link>
@@ -180,12 +179,12 @@ function Register() {
           ) : (
             <>
               <h2 className="text-2xl font-bold">Create your account</h2>
-              <p className="mt-2 text-sm text-slate-300">
+              <p className="mt-2 text-sm text-gray-500">
                 Register to unlock buying and tracking.
               </p>
 
               {errMsg && (
-                <p className="mt-4 rounded-md border border-rose-300/40 bg-rose-500/10 px-4 py-2 text-sm text-rose-200">
+                <p className="mt-4 rounded-md border border-red-300 bg-red-50 px-4 py-2 text-sm text-red-600">
                   {errMsg}
                 </p>
               )}
@@ -195,7 +194,7 @@ function Register() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="min-h-[48px] w-full rounded-md border border-slate-600 bg-slate-950/70 px-4 py-3 text-base text-white outline-none transition focus:border-cyan-400"
+                  className="min-h-[48px] w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-gray-800 outline-none transition focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
                   placeholder="Email"
                 />
                 <div className="space-y-2">
@@ -203,7 +202,7 @@ function Register() {
                     type="text"
                     value={user}
                     onChange={(e) => setUser(e.target.value)}
-                    className="min-h-[48px] w-full rounded-md border border-slate-600 bg-slate-950/70 px-4 py-3 text-base text-white outline-none transition focus:border-cyan-400"
+                    className="min-h-[48px] w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-gray-800 outline-none transition focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
                     placeholder="Username"
                     autoComplete="username"
                   />
@@ -213,33 +212,36 @@ function Register() {
                   type="password"
                   value={pwd}
                   onChange={(e) => setPwd(e.target.value)}
-                  className="min-h-[48px] w-full rounded-md border border-slate-600 bg-slate-950/70 px-4 py-3 text-base text-white outline-none transition focus:border-cyan-400"
+                  className="min-h-[48px] w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-gray-800 outline-none transition focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
                   placeholder="Password"
                 />
                 <input
                   type="password"
                   value={matchPwd}
                   onChange={(e) => setMatchPwd(e.target.value)}
-                  className="min-h-[48px] w-full rounded-md border border-slate-600 bg-slate-950/70 px-4 py-3 text-base text-white outline-none transition focus:border-cyan-400"
+                  className="min-h-[48px] w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-base text-gray-800 outline-none transition focus:border-orange-400 focus:ring-1 focus:ring-orange-400"
                   placeholder="Confirm password"
                 />
                 {matchPwd && pwd !== matchPwd && (
-                  <p className="text-sm text-amber-200">
+                  <p className="text-sm text-amber-600">
                     Password unmatched: confirmation must match password.
                   </p>
                 )}
                 <button
                   type="submit"
                   disabled={loading || !canSubmit}
-                  className="touch-action-manipulation min-h-[48px] w-full rounded-md bg-cyan-500 px-4 py-3 text-base font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="touch-action-manipulation min-h-[48px] w-full rounded-md bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3 text-base font-semibold text-white shadow-md transition hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? "Creating account..." : "Create account"}
                 </button>
               </form>
 
-              <p className="mt-6 text-sm text-slate-300">
+              <p className="mt-6 text-sm text-gray-500">
                 Already registered?{" "}
-                <Link to="/login" className="font-semibold text-cyan-300">
+                <Link
+                  to="/login"
+                  className="font-semibold text-orange-500 hover:text-orange-600"
+                >
                   Login
                 </Link>
               </p>

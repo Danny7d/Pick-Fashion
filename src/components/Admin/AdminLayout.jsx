@@ -108,9 +108,9 @@ const AdminLayout = () => {
       </aside>
 
       <div className="flex min-h-screen flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-white/70 bg-white/95 px-4 py-4 shadow-sm shadow-slate-200/50 backdrop-blur-xl lg:px-8">
+        <header className="sticky top-0 z-30 border-b border-white/70 bg-white/75 px-4 py-4 shadow-sm shadow-slate-200/50 backdrop-blur-xl lg:px-8">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex flex-1 items-center gap-3">
+            <div className="flex items-center gap-3">
               <button
                 type="button"
                 className="rounded-xl border border-stone-200 p-2 lg:hidden"
@@ -118,25 +118,17 @@ const AdminLayout = () => {
               >
                 <FiMenu size={20} />
               </button>
-              <div className="hidden w-full max-w-xs items-center gap-2 rounded-xl border border-stone-200 bg-white px-4 py-2.5 text-sm text-slate-500 md:flex">
+              <div className="hidden items-center gap-2 rounded-xl border border-stone-200 bg-white/80 px-4 py-2 text-sm text-slate-500 shadow-inner md:flex">
                 <FiSearch size={16} />
-                <input
-                  type="text"
-                  placeholder="Products, customers, orders"
-                  className="w-full bg-transparent outline-none placeholder-slate-400"
-                  disabled
-                />
+                <span>Products, customers, orders</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <button
-                type="button"
-                className="motion-button relative rounded-xl border border-stone-200 bg-white p-2 hover:bg-stone-50"
-              >
+              <div className="motion-button relative rounded-xl border border-stone-200 bg-white/80 p-2">
                 <FiBell size={18} className="text-slate-600" />
-              </button>
-              <div className="motion-card flex items-center gap-3 rounded-2xl border border-stone-200 bg-white px-3 py-2">
+              </div>
+              <div className="motion-card flex items-center gap-3 rounded-2xl border border-stone-200 bg-white/80 px-3 py-2">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
                   {(profile?.username || "A").charAt(0).toUpperCase()}
                 </div>
